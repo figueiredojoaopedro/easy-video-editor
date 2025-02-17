@@ -38,7 +38,7 @@ const preprocessMp4 = (inputPath, outputPath) => {
   });
 };
 
-const joiner = async (gain = 1, source_format = "mp4") => {
+const joiner = async (source_format = "mp4") => {
   const timestamp = new Date().getTime();
 
   const output_filename = `output_joined_${timestamp}.mp4`;
