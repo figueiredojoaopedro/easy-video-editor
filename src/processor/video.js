@@ -78,7 +78,6 @@ const joiner = async (source_format = "mp4") => {
     input_videos = input_videos.map((file) => path.resolve(input_dir, file));
   }
 
-  console.log("Input files:", input_videos + "\n");
   console.log("Output Path:", output_path + "\n");
 
   return new Promise((resolve, reject) => {
