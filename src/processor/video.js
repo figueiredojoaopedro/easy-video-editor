@@ -6,13 +6,6 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const input_dir = path.join(__dirname, "..", "..", "input");
 const output_dir = path.join(__dirname, "..", "..", "output");
-const preprocessed_dir = path.join(
-  __dirname,
-  "..",
-  "..",
-  "input",
-  "preprocessed"
-);
 
 // Create the output file path
 if (!fs.existsSync(output_dir)) {
@@ -27,18 +20,7 @@ try {
   process.exit(1);
 }
 
-// preprocess files to convert them from fragmented mp4 to mp4
-const preprocessMp4 = (inputPath, outputPath) => {
-  return new Promise((resolve, reject) => {
-    ffmpeg(inputPath)
-      .outputOptions("-movflags +faststart") // Fix MP4 without re-encoding
-      .on("end", () => resolve(outputPath))
-      .on("error", (error) => reject(error))
-      .save(outputPath);
-  });
-};
-
-const joiner = async (source_format = "mp4") => {
+const joiner = async () => {
   const timestamp = new Date().getTime();
 
   const output_filename = `output_joined_${timestamp}.mp4`;
@@ -47,11 +29,6 @@ const joiner = async (source_format = "mp4") => {
   // Ensure output directory exists
   if (!fs.existsSync(output_dir)) {
     fs.mkdirSync(output_dir, { recursive: true });
-  }
-
-  // Ensure preprocessed directory exists
-  if (!fs.existsSync(preprocessed_dir)) {
-    fs.mkdirSync(preprocessed_dir, { recursive: true });
   }
 
   let input_videos = fs
@@ -63,21 +40,7 @@ const joiner = async (source_format = "mp4") => {
     return;
   }
 
-  if (source_format !== "mp4") {
-    input_videos = await Promise.all(
-      input_videos.map((file, index) => {
-        const fixed_path = path.resolve(input_dir, file);
-
-        return preprocessMp4(
-          fixed_path,
-          path.resolve(input_dir, `preprocessed/${file}`)
-        );
-      })
-    );
-  } else {
-    input_videos = input_videos.map((file) => path.resolve(input_dir, file));
-  }
-
+  input_videos = input_videos.map((file) => path.resolve(input_dir, file));
   console.log("Output Path:", output_path + "\n");
 
   return new Promise((resolve, reject) => {
