@@ -7,7 +7,8 @@
     "start": "node src/index.js",
     "join": "node src/index.js join",
     "clear": "node src/index.js clear",
-    "volume": "node src/index.js volume"
+    "volume": "node src/index.js volume",
+    "convert": "node src/index.js convert"
   },
   "author": "",
   "license": "ISC",
