@@ -12,7 +12,7 @@
     "cut": "node src/index.js cut"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "type": "module",
   "dependencies": {
