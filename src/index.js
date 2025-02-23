@@ -27,6 +27,11 @@ const main = async () => {
       case "convert":
         await converter.mp4(...processment_params);
         break;
+      case "cut":
+        await video.cut(processment_params[0], [
+          ...processment_params.slice(1),
+        ]);
+        break;
       default:
         console.error("Invalid processment: " + processment);
         break;
