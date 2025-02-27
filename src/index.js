@@ -15,6 +15,9 @@ const main = async () => {
     console.info(`Processment: ${processment}`);
 
     switch (processment) {
+      case "health":
+        console.info("It is probably working...");
+        break;
       case "join":
         await video.joiner(...processment_params);
         break;
